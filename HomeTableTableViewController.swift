@@ -18,6 +18,7 @@ class HomeTableTableViewController: UITableViewController {
         loadTweets()
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         tableView.refreshControl = myRefreshControl
+        self.loadTweets()
     }
     @objc func loadTweets(){
         numberoftweets = 20
@@ -29,7 +30,7 @@ class HomeTableTableViewController: UITableViewController {
                 for tweet in tweets{
                     self.tweetsArray.append(tweet) // the resposne tweets, we want to save it to our local dictionary
                 }
-                print(self.tweetsArray.count)
+
                 self.tableView.reloadData()
                 self.myRefreshControl.endRefreshing() // to stop refresh icon
                  
@@ -39,6 +40,10 @@ class HomeTableTableViewController: UITableViewController {
         
 
     }
+   // override func viewDidAppear(_ animated: Bool) {
+     //   self.viewDidAppear(animated)
+     //   self.loadTweets()
+   // }
     func loadMoreTweets (){
         let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         numberoftweets += 20
@@ -49,11 +54,10 @@ class HomeTableTableViewController: UITableViewController {
                        for tweet in tweets{
                            self.tweetsArray.append(tweet) // the resposne tweets, we want to save it to our local dictionary
                        }
-                      
                        self.tableView.reloadData()
                         
                }, failure: { (Error) in
-                   print("Cant get tweets dictionary")
+                   print("Cant get tweets dictionary :)")
                })
     }
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -91,6 +95,9 @@ class HomeTableTableViewController: UITableViewController {
             cell.imageView?.image  = UIImage(data:imageData)
         }
         return cell
+    }
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
