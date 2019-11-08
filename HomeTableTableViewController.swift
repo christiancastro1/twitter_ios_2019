@@ -19,7 +19,7 @@ class HomeTableTableViewController: UITableViewController {
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         self.tableView.refreshControl = myRefreshControl
         self.tableView.rowHeight = UITableView.automaticDimension
-     
+        self.tableView.estimatedRowHeight = 150
     }
     @objc func loadTweets(){
         let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
@@ -41,7 +41,7 @@ class HomeTableTableViewController: UITableViewController {
 
     }
     override func viewDidAppear(_ animated: Bool) {
-       // self.viewDidAppear(animated)
+        //self.viewDidAppear(animated)
         self.loadTweets()
 }
     func loadMoreTweets (){
@@ -94,6 +94,11 @@ class HomeTableTableViewController: UITableViewController {
         if let imageData = data {
             cell.imageView?.image  = UIImage(data:imageData)
         }
+        cell.setLike(tweetsArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetID = tweetsArray[indexPath.row]["id"] as! Int
+        cell.Setretweetval(tweetsArray[indexPath.row]["retweeted"] as! Bool)
+        
+    
         return cell
     }
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
