@@ -40,10 +40,10 @@ class HomeTableTableViewController: UITableViewController {
         
 
     }
-   // override func viewDidAppear(_ animated: Bool) {
-     //   self.viewDidAppear(animated)
-     //   self.loadTweets()
-   // }
+    override func viewDidAppear(_ animated: Bool) {
+        self.viewDidAppear(animated)
+        self.loadTweets()
+}
     func loadMoreTweets (){
         let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         numberoftweets += 20
